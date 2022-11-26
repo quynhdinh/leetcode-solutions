@@ -38,7 +38,7 @@ public:
             return x.second < y.second;
         });
         int end = intervals[0].second;
-        int count = 1;        
+        int count = 1;
         for (int i = 1; i < intervals.size(); i++) {
             if (intervals[i].first > end) {
                 end = intervals[i].second;
