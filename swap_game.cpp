@@ -1,3 +1,4 @@
+// Leetcode: https://leetcode.com/problems/sliding-puzzle/
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -91,18 +92,15 @@ using namespace std;
 bool check(const vector<vector<int>>& grid){
     int R = size(grid), C = size(grid[0]);
     int need = 1;
-    for(int r = 0; r < R; r++){
+    for(int r = 0; r < R; r++)
         for(int c = 0; c < C; c++){
-            if(r == R - 1 && c == C - 1){
+            if(r == R - 1 && c == C - 1)
                 return grid[r][c] == 0;
-            }
-            if(grid[r][c] == need){
+            if(grid[r][c] == need)
                 need++;
-            } else {
+            else
                 return false;
-            }
         }
-    }
     assert(false);
 }
 const int dx[4] = {1, 0, -1, 0};
@@ -128,16 +126,18 @@ int main(){
     auto inside = [&](int r, int c){
         return r >= 0 && r < R && c >= 0 && c < C;
     };
-    int x = -1, y = -1;
-    for(int r = 0; r < R; r++)
-        for(int c = 0; c < C; c++)
-            if(grid[r][c] == 0)
-                x = r, y = c;
-    assert(x != -1 && y != -1);
-    assert(grid[x][y] == 0);
+    auto [xZero, yZero] = [&]() -> pair<int, int> {
+        for(int r = 0; r < R; r++)
+            for(int c = 0; c < C; c++)
+                if(grid[r][c] == 0)
+                    return {r, c};
+        assert(false);
+    }();
+    assert(xZero != -1 && yZero != -1);
+    assert(grid[xZero][yZero] == 0);
     set<vector<vector<int>>> vis;
     vis.insert(grid);
-    State init("", grid, x, y);
+    State init("", grid, xZero, yZero);
     queue<State> q({init});
     while(!q.empty()){
         State state = q.front();
